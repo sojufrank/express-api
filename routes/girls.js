@@ -15,6 +15,7 @@ router.get('/girls', (req, res, next) => {
 //create
 router.post('/girls', (req, res, next) => {
     console.log('route POST')
+    console.log(req.body)
     Girl.create(req.body)
         .then(girl => {
             res.send(girl)
