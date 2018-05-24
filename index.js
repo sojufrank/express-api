@@ -7,7 +7,6 @@ const db = require('./db')
 var cors = require('cors')
 
 
-
 const app = express()
 
 app.use(cors())
