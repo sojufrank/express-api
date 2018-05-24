@@ -17,7 +17,8 @@
     const get = document.querySelector('.get')
     get.addEventListener('click',(e) => {
         console.log("click GET")
-        const url = `http://localhost:3000/girls`
+        //const url = `http://localhost:3000/girls`
+        const url = `https://sojuexpress.herokuapp.com/girls`
         fetch(url)
             .then(res => res.json())
             .then(data => {
