@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div>express app</div>
+    <button class="get">GET</button>
+    <div class="load"></div>
+    
+</body>
+</html>
+<script>
+    const get = document.querySelector('.get')
+    get.addEventListener('click',(e) => {
+        console.log("click GET")
+        const url = `http://localhost:3000/girls`
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                const load = document.querySelector('.load')
+                load.innerHTML = data.map(item => {
+                    return `<div>${item.name} | ${item._id}</div>`
+                }).join('')
+            })
+    })
+</script>
