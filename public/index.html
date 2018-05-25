@@ -30,28 +30,40 @@
     const url = `https://sojuexpress.herokuapp.com/girls`
 
     const get = document.querySelector('.get')
-    get.addEventListener('click', e => {
-        console.log("click GET")
+    get.addEventListener('click',e => {
+        getRefresh()
+    })
 
-        fetch(url)
+function getRefresh(){
+
+    fetch(url)
             .then(res => res.json())
             .then(data => {
                 const load = document.querySelector('.load')
+                load.innerHTML = ``
                 data.sort().forEach(item => {
                     const elem = document.createElement('div')
                     elem.classList.add('response')
                     elem.innerHTML = `${item.name} ${item._id}`
                     elem.dataset.id = `${item._id}`
                     elem.dataset.name = `${item.name}`
+                    
+                    const btn = document.createElement('button')
+                    btn.classList.add('delete')
+                    btn.innerHTML = "DELETE"
+                    btn.dataset.id = `${item._id}`
+                    btn.dataset.name = `${item.name}`
+                    
+                    elem.appendChild(btn)
                     load.appendChild(elem)
-
                     clickHandler()
                 })
             })
-    })
+}
 
     function clickHandler() {
         const r = document.querySelectorAll('.response')
+        const button = document.querySelectorAll('.delete')
 
 
         const obj = {
@@ -60,13 +72,13 @@
             //headers: {'Content-Type': 'application/json'}
         }
 
-
-        r.forEach(item => {
-
+        button.forEach(item => {
             item.addEventListener('click', e => {
                 e.stopImmediatePropagation()
                 const uri = `https://sojuexpress.herokuapp.com/girls/${item.dataset.id}`
                 fetch(uri, obj)
+                    .then(res => res.json())
+                    .then(data => console.log(data))
             })
         })
     }
@@ -107,114 +119,9 @@
             }
 
             fetch(url, obj)
-                .then(res => console.log(res))
+                .then(res => res.json())
+                .then(data => console.log(data))
+                .then(getRefresh())
         })
     })
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-    /*
-        //const url = `http://localhost:3000/girls`
-        const url = `https://sojuexpress.herokuapp.com/girls`
-
-        const get = document.querySelector('.get')
-        get.addEventListener('click', e => {
-            console.log("click GET")
-            
-            fetch(url)
-                .then(res => res.json())
-                .then(data => {
-                    const load = document.querySelector('.load')
-                    data.forEach(item => {
-                        const elem = document.createElement('li')
-                        elem.classList.add('response')
-                        elem.innerHTML = `${item.name} ${item._id}`
-                        elem.dataset.id = `${item._id}`
-                        elem.dataset.name = `${item.name}`
-                        load.appendChild(elem)
-
-                        clickHandler()
-                    })
-                })
-        })
-
-        function clickHandler(){
-            const r = document.querySelectorAll('.response')
-
-
-            const obj = {
-                //body: JSON.stringify(data),
-                method:"DELETE",
-                //headers: {'Content-Type': 'application/json'}
-            }
-
-
-            r.forEach(item => {
-
-                item.addEventListener('click', e => {
-                    console.log("click DELETE")
-                    //console.log(e.target)
-                    console.log(item.dataset.name)
-                    
-                    const uri = `https://sojuexpress.herokuapp.com/girls/${e.target.dataset.id}`
-                    fetch(uri,obj)
-                })
-            })
-        }
-
-        const data = [
-            {
-                name:"soju",
-                rank:"female"
-            },
-            {
-                name:"nora",
-                rank:"female"
-            },
-            {
-                name:"mika",
-                rank:"female"
-            },
-            {
-                name:"kate",
-                rank:"female"
-            },
-            {
-                name:"lisa",
-                rank:"female"
-            }
-        ]
-
-        const post = document.querySelector('.post')
-        post.addEventListener('click', e => {
-            console.log("click POST")
-            
-            data.forEach(item => {
-                const obj = {
-                    body: JSON.stringify(item),
-                    method:"POST",
-                    headers: {'Content-Type': 'application/json'}
-                }
-                fetch(url,obj)
-            })
-        })
-        */
 </script>
